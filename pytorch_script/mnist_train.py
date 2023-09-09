@@ -47,9 +47,6 @@ def train(args, model, device, train_loader, optimizer, epoch):
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                 epoch, batch_idx * len(data), len(train_loader.dataset),
                 100. * batch_idx / len(train_loader), loss.item()))
-            if args.dry_run:
-                break
-
 
 def test(model, device, test_loader):
     model.eval()
@@ -72,7 +69,9 @@ def test(model, device, test_loader):
 
 def main():
     # Training settings
+    print('starting execution')
     parser = argparse.ArgumentParser(description='PyTorch MNIST Example')
+    print('starting adding arguments')
     parser.add_argument('--batch-size', type=int, default=64, metavar='N',
                         help='input batch size for training (default: 64)')
     parser.add_argument('--test-batch-size', type=int, default=1000, metavar='N',
@@ -83,28 +82,18 @@ def main():
                         help='learning rate (default: 1.0)')
     parser.add_argument('--gamma', type=float, default=0.7, metavar='M',
                         help='Learning rate step gamma (default: 0.7)')
-    parser.add_argument('--no-cuda', action='store_true', default=False,
-                        help='disables CUDA training')
-    parser.add_argument('--no-mps', action='store_true', default=False,
-                        help='disables macOS GPU training')
-    parser.add_argument('--dry-run', action='store_true', default=False,
-                        help='quickly check a single pass')
     parser.add_argument('--seed', type=int, default=1, metavar='S',
                         help='random seed (default: 1)')
     parser.add_argument('--log-interval', type=int, default=10, metavar='N',
                         help='how many batches to wait before logging training status')
-    parser.add_argument('--save-model', action='store_true', default=False,
-                        help='For Saving the current Model')
+    print('completed adding arguments')
     args = parser.parse_args()
-    use_cuda = not args.no_cuda and torch.cuda.is_available()
-    use_mps = not args.no_mps and torch.backends.mps.is_available()
-
+    print('completed parsing arguments')
+    use_cuda = torch.cuda.is_available() #not args.no_cuda and 
     torch.manual_seed(args.seed)
 
     if use_cuda:
         device = torch.device("cuda")
-    elif use_mps:
-        device = torch.device("mps")
     else:
         device = torch.device("cpu")
 
@@ -137,8 +126,7 @@ def main():
         test(model, device, test_loader)
         scheduler.step()
 
-    if args.save_model:
-        torch.save(model.state_dict(), "mnist_cnn.pt")
+    torch.save(model.state_dict(), "mnist_cnn.pt")
 
 
 if __name__ == '__main__':
