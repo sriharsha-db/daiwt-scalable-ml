@@ -1,1 +1,1 @@
-### daiwt example scripts for demo
+### daiwt scalable ml scripts for demo
