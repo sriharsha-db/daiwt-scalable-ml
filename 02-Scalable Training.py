@@ -73,7 +73,7 @@ USE_GPU = torch.cuda.is_available()
 NUM_GPUS_PER_NODE = 1
 NUM_PROCESSES = NUM_GPUS_PER_NODE*2
 username = spark.sql("SELECT current_user()").first()['current_user()']
-repo_path = f'/Workspace/Repos/{username}/daiwt-example/pytorch_script/mnist_train.py'
+repo_path = f'/Workspace/Repos/{username}/daiwt-scalable-ml/pytorch_script/mnist_train.py'
 
 # COMMAND ----------
 

@@ -53,7 +53,7 @@ spark.read.parquet(DATA_PATH).select("product_id", "review_body", "review_headli
   withColumn("review_body", clean_review_udf("review_body")).\
   withColumn("review_headline", clean_summary_udf("review_headline")).\
   filter("LENGTH(review_body) > 0 AND LENGTH(review_headline) > 0").\
-  write.format("delta").saveAsTable("uc_sriharsha_jana.test_db.amzcam_review_cleaned")
+  write.mode('overwrite').format("delta").saveAsTable("uc_sriharsha_jana.test_db.amzcam_review_cleaned")
 
 # COMMAND ----------
 
