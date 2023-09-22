@@ -3,7 +3,7 @@
 
 # COMMAND ----------
 
-display_slide('1hn4e_2HNrwNXly2xDF6YhwjrVK3lzgJO', 2)
+display_slide('1hn4e_2HNrwNXly2xDF6YhwjrVK3lzgJO', 1)
 
 # COMMAND ----------
 
