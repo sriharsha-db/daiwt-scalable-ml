@@ -66,12 +66,13 @@ pipelineModel = pipeline.fit(train)
 # COMMAND ----------
 
 import torch
+import mlflow
 
 # COMMAND ----------
 
 USE_GPU = torch.cuda.is_available()
 NUM_GPUS_PER_NODE = 1
-NUM_PROCESSES = NUM_GPUS_PER_NODE*2
+NUM_PROCESSES = NUM_GPUS_PER_NODE*1
 username = spark.sql("SELECT current_user()").first()['current_user()']
 repo_path = f'/Workspace/Repos/{username}/daiwt-scalable-ml/pytorch_script/mnist_train.py'
 
@@ -80,8 +81,8 @@ repo_path = f'/Workspace/Repos/{username}/daiwt-scalable-ml/pytorch_script/mnist
 from pyspark.ml.torch.distributor import TorchDistributor
 
 TorchDistributor(num_processes=NUM_PROCESSES,
-                 local_mode=False, 
-                 use_gpu=USE_GPU)\
+               local_mode=True, 
+               use_gpu=USE_GPU)\
           .run(repo_path, 
                "--batch-size=256", 
                "--test-batch-size=128", 
